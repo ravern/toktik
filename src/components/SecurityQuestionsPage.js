@@ -1,13 +1,15 @@
 import { Button, Center, Paper, Stack, Text, TextInput } from "@mantine/core";
 import { useForm } from "@mantine/form";
+import { parseDate } from "chrono-node";
 import React, { useState } from "react";
+import { useNavigate } from "react-router";
 
 const QUESTIONS = [
   {
     id: "birthday",
     question: "Enter your birthday.",
     placeholder: "e.g. 1 January 1970",
-    answer: new Date(1987, 6, 12),
+    answer: new Date(1987, 5, 12),
   },
   {
     id: "firstPet",
@@ -29,6 +31,9 @@ QUESTIONS.forEach((question) => {
 });
 
 export default function SecurityQuestionsPage() {
+  const navigate = useNavigate();
+
+  const [loading, setLoading] = useState(false);
   const [questionIndex, setQuestionIndex] = useState(0);
 
   const form = useForm({
@@ -39,7 +44,18 @@ export default function SecurityQuestionsPage() {
     event.preventDefault();
     const question = QUESTIONS[questionIndex];
     if (questionIndex < QUESTIONS.length - 1) {
-      if (
+      if (question.id === "birthday") {
+        const answer = parseDate(form.values[question.id]);
+        if (
+          question.answer.getFullYear() === answer.getFullYear() &&
+          question.answer.getMonth() === answer.getMonth() &&
+          question.answer.getDate() === answer.getDate()
+        ) {
+          setQuestionIndex(questionIndex + 1);
+        } else {
+          form.setErrors({ [question.id]: "Wrong answer!" });
+        }
+      } else if (
         form.values[question.id].toLowerCase().replace(/\s/g, "") ===
         question.answer.toLowerCase().replace(/\s/g, "")
       ) {
@@ -48,7 +64,10 @@ export default function SecurityQuestionsPage() {
         form.setErrors({ [question.id]: "Wrong answer!" });
       }
     } else {
-      console.log("CONFIRM");
+      setLoading(true);
+      setTimeout(() => {
+        navigate("/home");
+      }, 2000);
     }
   };
 
@@ -64,7 +83,7 @@ export default function SecurityQuestionsPage() {
               placeholder={QUESTIONS[questionIndex].placeholder}
               {...form.getInputProps(QUESTIONS[questionIndex].id)}
             />
-            <Button fullWidth mt="lg" type="submit">
+            <Button fullWidth mt="lg" type="submit" disabled={loading}>
               Submit
             </Button>
           </form>

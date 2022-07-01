@@ -7,16 +7,20 @@ import {
   Image,
   Paper,
   PasswordInput,
+  Stack,
   Text,
   TextInput,
 } from "@mantine/core";
 import { useForm } from "@mantine/form";
-import React from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 
 import LogoPNG from "../assets/logo.png";
 
 export default function LoginForm() {
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
+
   const form = useForm({
     initialValues: {
       emailOrUsername: "",
@@ -26,6 +30,12 @@ export default function LoginForm() {
 
   const handleSubmit = (event) => {
     event.preventDefault();
+    setError(null);
+    setLoading(true);
+    setTimeout(() => {
+      setError(new Error("Could not log in."));
+      setLoading(false);
+    }, 1000);
   };
 
   return (
@@ -58,9 +68,16 @@ export default function LoginForm() {
               <Text size="xs">Forgot your password?</Text>
             </Anchor>
           </Group>
-          <Button fullWidth mt="lg" type="submit">
-            Login
-          </Button>
+          <Stack mt="lg">
+            {error != null && (
+              <Text size="sm" color="red">
+                {error.message}
+              </Text>
+            )}
+            <Button fullWidth type="submit" disabled={loading}>
+              Login
+            </Button>
+          </Stack>
         </Box>
       </Paper>
     </Center>

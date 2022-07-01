@@ -45,19 +45,6 @@ export default function ForgotPasswordPage() {
               placeholder="johndoe@example.com"
               {...form.getInputProps("emailOrUsername")}
             />
-            {secondsToSendAgain !== 0 && secondsToSendAgain < 55 && (
-              <Text size="sm" mt="lg">
-                Alternatively, you can answer some{" "}
-                <Anchor
-                  component={Link}
-                  to={`/security-questions?email=${form.values.emailOrUsername}`}
-                  size="inherit"
-                >
-                  security questions
-                </Anchor>{" "}
-                to log in.
-              </Text>
-            )}
             <Button
               fullWidth
               mt="lg"
@@ -68,6 +55,17 @@ export default function ForgotPasswordPage() {
                 ? `Resend in ${secondsToSendAgain}s`
                 : "Send Email"}
             </Button>
+            <Text mt="lg">
+              Alternatively, you can answer some{" "}
+              <Anchor
+                component={Link}
+                to={`/security-questions`}
+                size="inherit"
+              >
+                security questions
+              </Anchor>{" "}
+              to log in.
+            </Text>
           </form>
         </Stack>
       </Paper>
