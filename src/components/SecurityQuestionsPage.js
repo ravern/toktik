@@ -4,22 +4,22 @@ import React, { useState } from "react";
 
 const QUESTIONS = [
   {
+    id: "birthday",
+    question: "Enter your birthday.",
+    placeholder: "e.g. 1 January 1970",
+    answer: new Date(1987, 6, 12),
+  },
+  {
     id: "firstPet",
     question: "What is the name of your first pet?",
     placeholder: "e.g. Johnny",
-    answer: "Jane",
-  },
-  {
-    id: "secondarySchool",
-    question: "What was the motto of your secondary school?",
-    placeholder: "e.g. Onwards as one",
-    answer: "The best is yet to be",
+    answer: "Sunny",
   },
   {
     id: "childhoodNickname",
     question: "What was your childhood nickname?",
     placeholder: "e.g. Bird",
-    answer: "Huzgonna Hackme",
+    answer: "hoozbooz",
   },
 ];
 
