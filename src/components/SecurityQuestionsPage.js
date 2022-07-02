@@ -45,11 +45,10 @@ export default function SecurityQuestionsPage() {
     const question = QUESTIONS[questionIndex];
     if (questionIndex < QUESTIONS.length - 1) {
       if (question.id === "birthday") {
-        let answer;
-        try {
-          answer = parseDate(form.values[question.id]);
-        } catch (error) {
+        const answer = parseDate(form.values[question.id]);
+        if (answer == null) {
           form.setErrors({ [question.id]: "Wrong answer!" });
+          return;
         }
         if (
           question.answer.getFullYear() === answer.getFullYear() &&
