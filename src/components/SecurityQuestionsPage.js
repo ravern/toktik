@@ -64,10 +64,17 @@ export default function SecurityQuestionsPage() {
         form.setErrors({ [question.id]: "Wrong answer!" });
       }
     } else {
-      setLoading(true);
-      setTimeout(() => {
-        navigate("/home");
-      }, 2000);
+      if (
+        form.values[question.id].toLowerCase().replace(/\s/g, "") ===
+        question.answer.toLowerCase().replace(/\s/g, "")
+      ) {
+        setLoading(true);
+        setTimeout(() => {
+          navigate("/home");
+        }, 2000);
+      } else {
+        form.setErrors({ [question.id]: "Wrong answer!" });
+      }
     }
   };
 
