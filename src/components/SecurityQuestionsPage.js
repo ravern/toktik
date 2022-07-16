@@ -9,7 +9,7 @@ const QUESTIONS = [
     id: "birthday",
     question: "Enter your birthday.",
     placeholder: "e.g. 1 January 1970",
-    answer: new Date(1987, 5, 12),
+    answer: new Date(1987, 5, 29),
   },
   {
     id: "firstPet",
